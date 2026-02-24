@@ -1,7 +1,8 @@
 # my cs30 stuff
 
 ## demos
-- I'll add demos here
+- [First Day Demo](01-firstdemo)
+- [Interactive Scene](interactive-scene) 
 
 ## assignments
 - assignments will be put here

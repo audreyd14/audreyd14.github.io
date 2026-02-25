@@ -2,7 +2,7 @@
 
 ## demos
 - [First Day Demo](01-firstdemo)
-- [Interactive Scene](interactive-scene) 
+- [Scope](02-scope)
 
 ## assignments
-- assignments will be put here
+- [Interactive Scene](interactive-scene)

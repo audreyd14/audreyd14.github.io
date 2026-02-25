@@ -49,19 +49,19 @@ function keyPressed(){
       w = 60;
       h = 150;
       fill(0);
-      rect(x, y, w, h)
-      }
+      rect(x, y, w, h);
+    }
     if (key === "2"){
       w = 50;
       h = 200;
       fill(0);
-      rect(x, y, w, h)
+      rect(x, y, w, h);
     }
     if (key === "3"){
       w = 80;
       h = 120;
       fill(0);
-     rect(x, y, w, h)
+      rect(x, y, w, h);
     }
 
   }

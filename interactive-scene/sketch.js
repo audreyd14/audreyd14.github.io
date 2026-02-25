@@ -12,7 +12,7 @@ let dayNight = 255;
 let x;
 let y;
 function setup() {
-  createCanvas(500, 400);
+  createCanvas(windowWidth, windowHeight);
   timeDay = loadImage("https://media.istockphoto.com/id/824800468/photo/sun-on-blue-sky-with-clouds.jpg?s=612x612&w=0&k=20&c=1XKIS7ggyyhj2oCZQluzIV579pkCBHq_-h9Vo4yNTmc=");
   timeNight = loadImage("https://images.stockcake.com/public/1/e/c/1ec187d3-dd14-430b-a417-86cc4eb85b1d_large/starry-night-sky-stockcake.jpg");
 }
@@ -39,7 +39,6 @@ function keyPressed(){
       return background(timeNight);
     } 
   }
-  
   function buildings(){
     let w;
     let h;
@@ -48,8 +47,15 @@ function keyPressed(){
     if (key === "1"){
       w = 60;
       h = 150;
+      // if (keyIsPressed === true){
+      //   if (keyCode === 187){
+      //     w += 10;
+      //     h += 10;
+      //   }
       fill(0);
       rect(x, y, w, h);
+        
+      }
     }
     if (key === "2"){
       w = 50;
@@ -65,6 +71,7 @@ function keyPressed(){
     }
 
   }
+  
 }
 
 //city builder: 3 building types (1, 2 , 3), change color with r(up or down), g(up or down), b(up or down), change building size with mouse wheel up/down, building follows mouse cursor until clicked into place, bonus: change night/day with n/d

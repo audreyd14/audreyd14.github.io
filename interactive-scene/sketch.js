@@ -11,6 +11,7 @@ let timeNight;
 let dayNight = 255;
 let x;
 let y;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   timeDay = loadImage("https://media.istockphoto.com/id/824800468/photo/sun-on-blue-sky-with-clouds.jpg?s=612x612&w=0&k=20&c=1XKIS7ggyyhj2oCZQluzIV579pkCBHq_-h9Vo4yNTmc=");
@@ -48,7 +49,8 @@ function keyPressed(){
       w = 60;
       h = 150;
       fill(0);
-      rect(x, y, w, h); 
+      rect(x, y, w, h);
+
     }
     else if (key === "2"){
       w = 50;

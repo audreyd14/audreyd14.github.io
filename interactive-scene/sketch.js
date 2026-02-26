@@ -47,31 +47,22 @@ function keyPressed(){
     if (key === "1"){
       w = 60;
       h = 150;
-      // if (keyIsPressed === true){
-      //   if (keyCode === 187){
-      //     w += 10;
-      //     h += 10;
-      //   }
       fill(0);
-      rect(x, y, w, h);
-        
-      }
+      rect(x, y, w, h); 
     }
-    if (key === "2"){
+    else if (key === "2"){
       w = 50;
       h = 200;
       fill(0);
       rect(x, y, w, h);
     }
-    if (key === "3"){
+    else if (key === "3"){
       w = 80;
       h = 120;
       fill(0);
       rect(x, y, w, h);
     }
-
   }
-  
 }
 
 //city builder: 3 building types (1, 2 , 3), change color with r(up or down), g(up or down), b(up or down), change building size with mouse wheel up/down, building follows mouse cursor until clicked into place, bonus: change night/day with n/d

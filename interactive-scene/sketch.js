@@ -8,7 +8,7 @@
 
 let timeDay;
 let timeNight;
-let dayNight = 255;
+// let dayNight = 255;
 let x;
 let y;
 
@@ -19,46 +19,84 @@ function setup() {
 }
 
 function draw() {
-  background(dayNight);
-  keyPressed();
+  // background(dayNight);
+  buttons();
+  ground();
 }
   
 //   dayNight();
 // }
 
+function buttons() {
+  fill("yellow");
+  circle(50, 50, 50);
 
-function keyPressed(){
-  dayNight();
-  buildings();
-  function dayNight(){
-    if (key === "d"){//day sky
-      image(timeDay, 0 , 0);
-      return background(timeDay);
-    }  
-    if (key === "n"){//night sky
-      image(timeNight, 0 , 0);
-      return background(timeNight);
-    } 
+  fill("grey");
+  circle(130, 50, 50);
+}
+
+function ground(){
+  fill("green");
+  noStroke();
+  rect(0, windowHeight - windowHeight/5, windowWidth, windowHeight/5);
+}
+function mousePressed(){
+  if (mouseX > 25 && mouseX < 75 && mouseY > 25 && mouseY < 75){
+    image(timeDay, 0 , 0);
+    return background(timeDay);
   }
+  else if (mouseX > 105 && mouseX < 155 && mouseY > 25 && mouseY < 75){
+    image(timeNight, 0 , 0);
+    return background(timeNight);
+  }
+}
+// function mouseClicked(){
+//   // dayNight();
+//   buildings();
+// function dayNight(){
+//   if (key === "d"){//day sky
+//     image(timeDay, 0 , 0);
+//     return background(timeDay);
+//   }  
+//   if (key === "n"){//night sky
+//     image(timeNight, 0 , 0);
+//     return background(timeNight);
+//   } 
+// }
+function mouseClicked(){
+  buildings();
   function buildings(){
     let w;
     let h;
     x = mouseX;
     y = mouseY;
-    if (key === "1"){
+    // let direction = 
+    // mouseWheel();
+    // function mouseWheel(event){
+    //   if (event.delta > 0){
+    //     direction  = '▲';
+    //     w += 10;
+    //     h += 10;
+    //   }
+    //   else {
+    //     direction = '▼';
+    //     w -= 10;
+    //     h -= 10;
+    //   }
+    // }
+    if (keyIsDown(49)){
       w = 60;
       h = 150;
       fill(0);
       rect(x, y, w, h);
-
     }
-    else if (key === "2"){
+    if (keyIsDown(50)){
       w = 50;
       h = 200;
       fill(0);
       rect(x, y, w, h);
     }
-    else if (key === "3"){
+    if (keyIsDown(51)){
       w = 80;
       h = 120;
       fill(0);

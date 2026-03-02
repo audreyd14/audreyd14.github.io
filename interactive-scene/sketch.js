@@ -8,10 +8,11 @@
 
 let timeDay;
 let timeNight;
-// let dayNight = 255;
 let x;
 let y;
-
+let rgb = 0;
+let w;
+let h;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   timeDay = loadImage("https://media.istockphoto.com/id/824800468/photo/sun-on-blue-sky-with-clouds.jpg?s=612x612&w=0&k=20&c=1XKIS7ggyyhj2oCZQluzIV579pkCBHq_-h9Vo4yNTmc=");
@@ -19,13 +20,9 @@ function setup() {
 }
 
 function draw() {
-  // background(dayNight);
   buttons();
   ground();
-}
-  
-//   dayNight();
-// }
+} 
 
 function buttons() {
   fill("yellow");
@@ -50,59 +47,53 @@ function mousePressed(){
     return background(timeNight);
   }
 }
-// function mouseClicked(){
-//   // dayNight();
-//   buildings();
-// function dayNight(){
-//   if (key === "d"){//day sky
-//     image(timeDay, 0 , 0);
-//     return background(timeDay);
-//   }  
-//   if (key === "n"){//night sky
-//     image(timeNight, 0 , 0);
-//     return background(timeNight);
-//   } 
-// }
+
 function mouseClicked(){
   buildings();
-  function buildings(){
-    let w;
-    let h;
-    x = mouseX;
-    y = mouseY;
-    // let direction = 
-    // mouseWheel();
-    // function mouseWheel(event){
-    //   if (event.delta > 0){
-    //     direction  = '▲';
-    //     w += 10;
-    //     h += 10;
-    //   }
-    //   else {
-    //     direction = '▼';
-    //     w -= 10;
-    //     h -= 10;
-    //   }
-    // }
-    if (keyIsDown(49)){
-      w = 60;
-      h = 150;
-      fill(0);
-      rect(x, y, w, h);
-    }
-    if (keyIsDown(50)){
-      w = 50;
-      h = 200;
-      fill(0);
-      rect(x, y, w, h);
-    }
-    if (keyIsDown(51)){
-      w = 80;
-      h = 120;
-      fill(0);
-      rect(x, y, w, h);
-    }
+}
+
+function buildings(){
+  x = mouseX;
+  if (keyIsDown(49)){
+    w = 60;
+    h = 150;
+    y = windowHeight - (windowHeight/5 + h);
+    fill(rgb);
+    rect(x, y, w, h);
+  }
+  if (keyIsDown(50)){
+    w = 50;
+    h = 200;
+    y = windowHeight - (windowHeight/5 + h);
+    fill(rgb);
+    rect(x, y, w, h);
+  }
+  if (keyIsDown(51)){
+    w = 80;
+    h = 120;
+    y = windowHeight - (windowHeight/5 + h);
+    fill(rgb);
+    rect(x, y, w, h);
   }
 }
 
+function keyPressed(){
+  if (key === 38){
+    w += w;
+    h += h;
+  }
+  else if (key === 40){
+    w -= w;
+    h -= h;
+  }
+}
+
+function mouseWheel(event){
+  if (event.delta < 0){
+    rgb  += 10;
+  }
+  else if (event.delta > 0) {
+    rgb -= 10;
+  }
+}
 //city builder: 3 building types (1, 2 , 3), change color with r(up or down), g(up or down), b(up or down), change building size with mouse wheel up/down, building follows mouse cursor until clicked into place, bonus: change night/day with n/d

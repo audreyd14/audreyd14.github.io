@@ -20,6 +20,7 @@ let duration = 2000;
 
 //calling all images used throughout city builder
 function setup() {
+  
   createCanvas(windowWidth, windowHeight);
   timeDay = loadImage("https://media.istockphoto.com/id/824800468/photo/sun-on-blue-sky-with-clouds.jpg?s=612x612&w=0&k=20&c=1XKIS7ggyyhj2oCZQluzIV579pkCBHq_-h9Vo4yNTmc=");
   timeNight = loadImage("https://images.stockcake.com/public/1/e/c/1ec187d3-dd14-430b-a417-86cc4eb85b1d_large/starry-night-sky-stockcake.jpg");
@@ -28,6 +29,7 @@ function setup() {
 
 //calling all draw functions
 function draw() {
+
   noStroke();
   dayNight();
   buttons();
@@ -39,17 +41,20 @@ function draw() {
 
 //places question mark image on screen
 function instructions(){
+
   image(question, 50, 150, 100, 100);
 }
 
 //rectangle for the grass below the buildings
 function ground(){
+
   fill(100, 200, 70);
   rect(0, windowHeight - windowHeight/5, windowWidth, windowHeight/5);
 }
 
 //circles for the day and night buttons
 function buttons() {
+
   fill("yellow");
   circle(50, 50, 50);
 
@@ -59,9 +64,11 @@ function buttons() {
 
 //sets currentTime to an image of day or night: this is changed by using the day and night buttons
 function dayNight(){
+
   if (currentTime === "day") {
     image(timeDay, 0 , 0, windowWidth, windowHeight);
   }
+
   else if (currentTime === "night"){
     image(timeNight, 0 , 0, windowWidth, windowHeight);
   }
@@ -69,6 +76,7 @@ function dayNight(){
 
 //all text used in the functional button messages
 function messages(){
+
   //if button hasn't been clicked, do not show message
   if (millis() - startTime >= duration){
     showDayMessage = false;
@@ -103,6 +111,7 @@ function messages(){
 
 //makes functional buttons using images from the buttons function, and instructions function 
 function mousePressed(){
+
   if (mouseX > 25 && mouseX < 75 && mouseY > 25 && mouseY < 75){
     //changes background to day and shows day message for 2000ms
     currentTime = "day";
@@ -127,8 +136,10 @@ function mousePressed(){
 
 //uses keys 1,2,3 to make different building types with different w and h values, used in creating new building in the allBuildings array
 function mouseClicked(){
+
   let newW;
   let newH;
+
   if (keyIsDown(49)){
     newW = 60;
     newH = 150;
@@ -172,26 +183,33 @@ function drawBuildings(){
 
 //function to erase the buildings
 function eraseBuildings(){
+
   allBuildings = [];
 }
 
 //uses the keyPressed function to change the size of the last building in the allBuildings array: up = bigger w and h, down = smaller w and h
 function keyPressed(){
+
   if (allBuildings.length > 0){
+
     let b = allBuildings[allBuildings.length - 1];
 
     if (keyCode === UP_ARROW){
+
       if(b.w < windowWidth/4 && b.h < windowHeight/2){
         b.w += 10;
         b.h += 10;
       }
     }
+
     else if (keyCode === DOWN_ARROW){
+
       if (b.w> 10 && b.h> 10){
         b.w -= 10;
         b.h -= 10;
       }
     }
+
     //uses key x to erase all buildings placed in the window
   if (key === "x"){
     eraseBuildings();
@@ -201,12 +219,14 @@ function keyPressed(){
 
 //change new building's shade of grey using mouse wheel: up = lighter, down = darker
 function mouseWheel(event){
+
   if (event.delta < 0){
     rgb  += 10;
   }
+
   else if (event.delta > 0) {
     rgb -= 10;
   }
+
   rgb = constrain(rgb, 0, 255);
 }
-//city builder: 3 building types (1, 2 , 3), change color with r(up or down), g(up or down), b(up or down), change building size with mouse wheel up/down, building follows mouse cursor until clicked into place, bonus: change night/day with n/d

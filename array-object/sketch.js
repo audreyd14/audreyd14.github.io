@@ -12,6 +12,11 @@ let question;
 let blueHouse;
 let pinkHouse;
 let orangeHouse;
+let houseImage;
+let buildingImage;
+let building1;
+let building2;
+let building3;
 let showDayMessage = false;
 let showNightMessage = false;
 let showInstructionsMessage = false;
@@ -32,6 +37,9 @@ function setup() {
   blueHouse = loadImage("blue-house.png");
   pinkHouse = loadImage("pink-house.png");
   orangeHouse = loadImage("orange-house.png");
+  building1 = loadImage("building-1.png");
+  building2 = loadImage("building-2.png");
+  building3 = loadImage("building-3.png");
 }
 
 //calling all draw functions
@@ -44,6 +52,7 @@ function draw() {
   instructions();
   messages();
   drawBuildings();
+  drawHouses();
 } 
 
 //places question mark image on screen
@@ -150,18 +159,21 @@ function mouseClicked(){
     let newH;
 
     if (keyIsDown(49)){
-      newW = 60;
-      newH = 150;
+      newW = building1.width*2;
+      newH = building1.height*2;
+      buildingImage = building1;
     }
 
     else if (keyIsDown(50)){
-      newW = 50;
-      newH = 200;
+      newW = building2.width*2;
+      newH = building2.height*2;
+      buildingImage = building2;
     }
 
     else if (keyIsDown(51)){
-      newW = 80;
-      newH = 120;
+      newW = building3.width*2;
+      newH = building3.height*2;
+      buildingImage = building3;
     }
     
     else {
@@ -172,7 +184,7 @@ function mouseClicked(){
       x: mouseX,
       w: newW,
       h: newH,
-      colour: rgb,
+      image: buildingImage,
     };
 
     allBuildings.push(building);
@@ -183,20 +195,20 @@ function mouseClicked(){
     let newH;
 
     if (keyIsDown(52)){
-      newW = blueHouse.width();
-      newH = blueHouse.height();
+      newW = blueHouse.width/4;
+      newH = blueHouse.height/4;
       houseImage = blueHouse;
     }
 
     else if (keyIsDown(53)){
-      newW = pinkHouse.width();
-      newH = pinkHouse.height();
+      newW = pinkHouse.width/4;
+      newH = pinkHouse.height/4;
       houseImage = pinkHouse;
     }
 
     else if (keyIsDown(54)){
-      newW = orangeHouse.width();
-      newH = orangeHouse.height();
+      newW = orangeHouse.width/4;
+      newH = orangeHouse.height/4;
       houseImage = orangeHouse;
     }
     
@@ -222,8 +234,7 @@ function drawBuildings(){
 
     let y = windowHeight - (windowHeight/5 + b.h);
   
-    fill(b.colour);
-    rect(b.x,y,b.w,b.h);
+    image(b.image, b.x, y, b.w, b.h);
   }
 }
 
@@ -299,15 +310,15 @@ function keyPressed(){
 
 
 //change new building's shade of grey using mouse wheel: up = lighter, down = darker
-function mouseWheel(event){
+// function mouseWheel(event){
 
-  if (event.delta < 0){
-    rgb  += 10;
-  }
+//   if (event.delta < 0){
+//     rgb  += 10;
+//   }
 
-  else if (event.delta > 0) {
-    rgb -= 10;
-  }
+//   else if (event.delta > 0) {
+//     rgb -= 10;
+//   }
 
-  rgb = constrain(rgb, 0, 255);
-}
+//   rgb = constrain(rgb, 0, 255);
+// }

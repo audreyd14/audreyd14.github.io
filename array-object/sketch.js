@@ -21,7 +21,7 @@ let showDayMessage = false;
 let showNightMessage = false;
 let showInstructionsMessage = false;
 let currentTime = "day";
-let rgb = 0;
+// let rgb = 0;
 let allBuildings = [];
 let allHouses = [];
 let startTime = 0;
@@ -44,7 +44,7 @@ function setup() {
 
 //calling all draw functions
 function draw() {
-
+  resizeCanvas(windowWidth, windowHeight);
   noStroke();
   dayNight();
   buttons();

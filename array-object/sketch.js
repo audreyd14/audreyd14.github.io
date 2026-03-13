@@ -9,14 +9,17 @@
 let timeDay;
 let timeNight;
 let question;
-let blueHouse;
-let pinkHouse;
-let orangeHouse;
+let houseBlue;
+let houseGreen;
+let housePink;
+let houseYellow;
 let houseImage;
 let buildingImage;
-let building1;
-let building2;
-let building3;
+let buildingBlue;
+let buildingGreen;
+let buildingPurple;
+let buildingRed;
+let buildingYellow;
 let showDayMessage = false;
 let showNightMessage = false;
 let showInstructionsMessage = false;
@@ -34,12 +37,15 @@ function setup() {
   timeDay = loadImage("https://media.istockphoto.com/id/824800468/photo/sun-on-blue-sky-with-clouds.jpg?s=612x612&w=0&k=20&c=1XKIS7ggyyhj2oCZQluzIV579pkCBHq_-h9Vo4yNTmc=");
   timeNight = loadImage("https://images.stockcake.com/public/1/e/c/1ec187d3-dd14-430b-a417-86cc4eb85b1d_large/starry-night-sky-stockcake.jpg");
   question = loadImage("question.png");
-  blueHouse = loadImage("blue-house.png");
-  pinkHouse = loadImage("pink-house.png");
-  orangeHouse = loadImage("orange-house.png");
-  building1 = loadImage("building-1.png");
-  building2 = loadImage("building-2.png");
-  building3 = loadImage("building-3.png");
+  houseBlue = loadImage("house-blue.png");
+  houseGreen = loadImage("house-green.png");
+  housePink = loadImage("house-pink.png");
+  houseYellow = loadImage("house-yellow.png");
+  buildingBlue = loadImage("building-blue.png");
+  buildingGreen = loadImage("building-green.png");
+  buildingPurple = loadImage("building-purple.png");
+  buildingRed = loadImage("building-red.png");
+  buildingYellow = loadImage("building-yellow.png");
 }
 
 //calling all draw functions
@@ -159,21 +165,31 @@ function mouseClicked(){
     let newH;
 
     if (keyIsDown(49)){
-      newW = building1.width*2;
-      newH = building1.height*2;
-      buildingImage = building1;
+      newW = buildingBlue.width;
+      newH = buildingBlue.height;
+      buildingImage = buildingBlue;
     }
 
     else if (keyIsDown(50)){
-      newW = building2.width*2;
-      newH = building2.height*2;
-      buildingImage = building2;
+      newW = buildingGreen.width;
+      newH = buildingGreen.height;
+      buildingImage = buildingGreen;
     }
 
     else if (keyIsDown(51)){
-      newW = building3.width*2;
-      newH = building3.height*2;
-      buildingImage = building3;
+      newW = buildingPurple.width;
+      newH = buildingPurple.height;
+      buildingImage = buildingPurple;
+    }
+    else if (keyIsDown(52)){
+      newW = buildingRed.width;
+      newH = buildingRed.height;
+      buildingImage = buildingRed;
+    }
+    else if (keyIsDown(53)){
+      newW = buildingYellow.width;
+      newH = buildingYellow.height;
+      buildingImage = buildingYellow;
     }
     
     else {
@@ -194,22 +210,28 @@ function mouseClicked(){
     let newW;
     let newH;
 
-    if (keyIsDown(52)){
-      newW = blueHouse.width/4;
-      newH = blueHouse.height/4;
-      houseImage = blueHouse;
+    if (keyIsDown(54)){
+      newW = houseBlue.width;
+      newH = houseBlue.height;
+      houseImage = houseBlue;
     }
 
-    else if (keyIsDown(53)){
-      newW = pinkHouse.width/4;
-      newH = pinkHouse.height/4;
-      houseImage = pinkHouse;
+    else if (keyIsDown(55)){
+      newW = houseGreen.width;
+      newH = houseGreen.height;
+      houseImage = houseGreen;
     }
 
-    else if (keyIsDown(54)){
-      newW = orangeHouse.width/4;
-      newH = orangeHouse.height/4;
-      houseImage = orangeHouse;
+    else if (keyIsDown(56)){
+      newW = housePink.width;
+      newH = housePink.height;
+      houseImage = housePink;
+    }
+
+    else if (keyIsDown(57)){
+      newW = houseYellow.width;
+      newH = houseYellow.height;
+      houseImage = houseYellow;
     }
     
     else {
@@ -265,16 +287,16 @@ function keyPressed(){
       if (keyCode === UP_ARROW){
 
         if(b.w < windowWidth/4 && b.h < windowHeight/2){
-          b.w += 10;
-          b.h += 10;
+          b.w += b.w/10;
+          b.h += b.h/10;
         }
       }
 
       else if (keyCode === DOWN_ARROW){
 
         if (b.w> 10 && b.h> 10){
-          b.w -= 10;
-          b.h -= 10;
+          b.w -= b.w/10;
+          b.h -= b.h/10;
         }
       }
     }
@@ -287,16 +309,16 @@ function keyPressed(){
       if (keyCode === RIGHT_ARROW){
 
         if(house.w < windowWidth/4 && house.h < windowHeight/2){
-          house.w += 10;
-          house.h += 10;
+          house.w += house.w/10;
+          house.h += house.h/10;
         }
       }
 
       else if (keyCode === LEFT_ARROW){
 
         if (house.w> 10 && house.h> 10){
-          house.w -= 10;
-          house.h -= 10;
+          house.w -= house.w/10;
+          house.h -= house.h/10;
         }
       }
     }

@@ -158,7 +158,7 @@ function mouseClicked(){
   else {
     return;
   }
-//creates new building in allBuildings array and pushes it to the end of array
+  //creates new building in allBuildings array and pushes it to the end of array
   let building = {
     x: mouseX,
     w: newW,
@@ -176,8 +176,8 @@ function drawBuildings(){
 
     let y = windowHeight - (windowHeight/5 + b.h);
   
-  fill(b.colour);
-  rect(b.x,y,b.w,b.h);
+    fill(b.colour);
+    rect(b.x,y,b.w,b.h);
   }
 }
 
@@ -211,10 +211,10 @@ function keyPressed(){
     }
 
     //uses key x to erase all buildings placed in the window
-  if (key === "x"){
-    eraseBuildings();
+    if (key === "x"){
+      eraseBuildings();
+    }
   }
-}
 }
 
 //change new building's shade of grey using mouse wheel: up = lighter, down = darker

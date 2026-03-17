@@ -29,13 +29,14 @@ let allBuildings = [];
 let allHouses = [];
 let startTime = 0;
 let duration = 2000;
+let scale = 
 
 //calling all images used throughout city builder
 function setup() {
   
   createCanvas(windowWidth, windowHeight);
-  timeDay = loadImage("https://media.istockphoto.com/id/824800468/photo/sun-on-blue-sky-with-clouds.jpg?s=612x612&w=0&k=20&c=1XKIS7ggyyhj2oCZQluzIV579pkCBHq_-h9Vo4yNTmc=");
-  timeNight = loadImage("https://images.stockcake.com/public/1/e/c/1ec187d3-dd14-430b-a417-86cc4eb85b1d_large/starry-night-sky-stockcake.jpg");
+  timeDay = loadImage("day.png");
+  timeNight = loadImage("night-scene.png");
   question = loadImage("question.png");
   houseBlue = loadImage("house-blue.png");
   houseGreen = loadImage("house-green.png");
@@ -46,7 +47,7 @@ function setup() {
   buildingPurple = loadImage("building-purple.png");
   buildingRed = loadImage("building-red.png");
   buildingYellow = loadImage("building-yellow.png");
-}
+};
 
 //calling all draw functions
 function draw() {
@@ -69,9 +70,15 @@ function instructions(){
 
 //rectangle for the grass below the buildings
 function ground(){
+  if (currentTime === "day"){
+    fill(100, 200, 70);
+    rect(0, windowHeight - windowHeight/5, windowWidth, windowHeight/5);
+  }
 
-  fill(100, 200, 70);
-  rect(0, windowHeight - windowHeight/5, windowWidth, windowHeight/5);
+  if (currentTime === "night"){
+    fill(70, 150, 0);
+    rect(0, windowHeight - windowHeight/5, windowWidth, windowHeight/5);
+  }
 }
 
 //circles for the day and night buttons
@@ -89,10 +96,12 @@ function dayNight(){
 
   if (currentTime === "day") {
     image(timeDay, 0 , 0, windowWidth, windowHeight);
+    noTint();
   }
 
   else if (currentTime === "night"){
     image(timeNight, 0 , 0, windowWidth, windowHeight);
+    tint(190);
   }
 }
 
@@ -156,6 +165,9 @@ function mousePressed(){
   }
 }
 
+function scalingBuildingsHouses(){
+
+}
 //uses keys 1,2,3 to make different building types with different w and h values, used in creating new building in the allBuildings array
 function mouseClicked(){
   cityBuildings();

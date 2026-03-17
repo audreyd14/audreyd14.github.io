@@ -24,18 +24,18 @@ let showDayMessage = false;
 let showNightMessage = false;
 let showInstructionsMessage = false;
 let currentTime = "day";
-// let rgb = 0;
 let allBuildings = [];
 let allHouses = [];
 let startTime = 0;
 let duration = 2000;
-let scale = 
+let scale;
 
 //calling all images used throughout city builder
 function setup() {
   
   createCanvas(windowWidth, windowHeight);
-  timeDay = loadImage("day.png");
+  
+  timeDay = loadImage("day-scene.png");
   timeNight = loadImage("night-scene.png");
   question = loadImage("question.png");
   houseBlue = loadImage("house-blue.png");
@@ -52,6 +52,7 @@ function setup() {
 //calling all draw functions
 function draw() {
   resizeCanvas(windowWidth, windowHeight);
+  scale = min(windowWidth/1000, windowHeight/1000);
   noStroke();
   dayNight();
   buttons();
@@ -136,7 +137,14 @@ function messages(){
     textSize(windowWidth/60);
     textAlign(LEFT);
     textWrap(WORD);
-    text("Instructions: yellow button - change to day, grey button - change to night, key1 - building 1, key2 - building 2, key3 - building 3, up/down arrows - increase/decrease size of last building placed, mouse wheel up/down - lighten/darken building colour, key x - erase all buildings", windowWidth/10, windowHeight/8, windowWidth-windowWidth/10);
+    text(`Instructions: 
+      ~ question mark - click to toggle instructions on/off
+      ~ yellow button - change to day time 
+      ~ grey button - change to night time
+      ~ number keys 1-9 - place different buildings and houses
+      ~ up/down arrows - increase/decrease size of last building placed
+      ~ left/right arrows - increase/decrease size of last house placed
+      ~ key x - erase all buildings`, windowWidth/10, windowHeight/8, windowWidth-windowWidth/10);
   }
 }
 
@@ -149,6 +157,7 @@ function mousePressed(){
     startTime = millis();
     showDayMessage = true;
     showNightMessage = false;
+    showInstructionsMessage = false;
   }
 
   else if (mouseX > 105 && mouseX < 155 && mouseY > 25 && mouseY < 75){
@@ -157,6 +166,7 @@ function mousePressed(){
     startTime = millis();
     showNightMessage = true;
     showDayMessage = false;
+    showInstructionsMessage = false;
   }
 
   if (mouseX > 50 && mouseX < 150 && mouseY > 150 && mouseY < 250){
@@ -266,18 +276,18 @@ function drawBuildings(){
 
   for (let b of allBuildings){
 
-    let y = windowHeight - (windowHeight/5 + b.h);
+    let y = windowHeight - (windowHeight/5 + b.h * scale);
   
-    image(b.image, b.x, y, b.w, b.h);
+    image(b.image, b.x, y, b.w * scale, b.h * scale);
   }
 }
 
 function drawHouses(){
   for(let house of allHouses){
     
-    let y = windowHeight - (windowHeight/5 + house.h);
+    let y = windowHeight - (windowHeight/5 + house.h * scale);
 
-    image(house.image, house.x, y, house.w, house.h);
+    image(house.image, house.x, y, house.w * scale, house.h * scale);
   }
 }
 //function to erase the buildings
@@ -342,17 +352,3 @@ function keyPressed(){
   }
 }
 
-
-//change new building's shade of grey using mouse wheel: up = lighter, down = darker
-// function mouseWheel(event){
-
-//   if (event.delta < 0){
-//     rgb  += 10;
-//   }
-
-//   else if (event.delta > 0) {
-//     rgb -= 10;
-//   }
-
-//   rgb = constrain(rgb, 0, 255);
-// }

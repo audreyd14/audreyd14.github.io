@@ -8,6 +8,7 @@
 - [Generative Art](05-art)
 - [Perlin Noise](06-perlin)
 - [2d Grid](07-grid)
+- [Rect Grid](08-rect-grid)
 
 ## assignments
 - [Interactive Scene](interactive-scene)

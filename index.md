@@ -14,3 +14,4 @@
 ## assignments
 - [Interactive Scene](interactive-scene)
 - [Array and Obeject Notation](array-object)
+- [2D Grid](grid-game)

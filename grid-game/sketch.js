@@ -12,6 +12,7 @@ let lines;
 let rows;
 let cols;
 let lineWidth = 10;
+let horizontal = true;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -68,9 +69,13 @@ function displayLines(){
 function mousePressed(){
   let x = Math.floor(mouseX/LINE_LENGTH);
   let y = Math.floor(mouseY/LINE_LENGTH);
-
-  toggleLinesX(x, y);
-  toggleLinesY(x, y);
+  lineCorrect(x, y);
+  if (horizontal === true){
+    toggleLinesX(x, y);
+  }
+  if (horizontal === false){
+    toggleLinesY(x, y);
+  }
 }
 
 function toggleLinesX(x, y){
@@ -98,19 +103,26 @@ function toggleLinesY(x, y){
 }
 
 function lineCorrect(x,y){
-  let onX = false;
-  let onY = false;
 
-  if (x % cols >= 0 - lineWidth && x % cols <= 0 + lineWidth){
-    onX = true;
-    return lineCorrect = true;
+  if (mouseY <= y + lineWidth || mouseY >= y - lineWidth ){
+    horizontal = true;
   }
 
-  if (y % rows >= 0 - lineWidth && y % rows <= 0 + lineWidth){
-    onY = true;
-    return lineCorrect = false;
+  else if (mouseX <= x + lineWidth || mouseX >= x - lineWidth){
+    horizontal = false;
   }
 }
+
+// function lineCorrect(x,y){
+
+//   if (x % cols >= 0 - lineWidth && x % cols <= 0 + lineWidth){
+//     return horizontal = true;
+//   }
+
+//   else if (y % rows >= 0 - lineWidth && y % rows <= 0 + lineWidth){
+//     return horizontal = false;
+//   }
+// }
 
 // function toggleGrid(x, y){
 //   if (x>=0 && x< cols && y >=0 && y< rows){

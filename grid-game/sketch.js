@@ -67,8 +67,8 @@ function displayLines(){
 
 
 function mousePressed(){
-  let x = Math.floor(mouseX/LINE_LENGTH);
-  let y = Math.floor(mouseY/LINE_LENGTH);
+  let x = Math.floor((mouseX*LINE_LENGTH)/ cols);
+  let y = Math.floor((mouseY*LINE_LENGTH)/ rows);
   lineCorrect(x, y);
   if (horizontal === true){
     toggleLinesX(x, y);
@@ -104,7 +104,7 @@ function toggleLinesY(x, y){
 
 function lineCorrect(x,y){
 
-  if (mouseY <= y + lineWidth || mouseY >= y - lineWidth ){
+  if (mouseY <= y + lineWidth || mouseY >= y - lineWidth && mouseY <= y + lineWidth){
     horizontal = true;
   }
 

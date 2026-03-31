@@ -7,19 +7,25 @@
 
 const CELL_SIZE = 50;
 const LINE_LENGTH = 50;
-let grid;
+let rectGrid;
+let lineGrid;
 let lines;
 let rows;
 let cols;
 let lineWidth = 10;
 let horizontal = true;
+let startLines;
 
+function preload(){
+  startLines = "lines.txt";
+  lines = loadStrings(startLines);
+}
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  rows = 10;
-  cols = 10;
-  grid = generateGrid(cols, rows);
-  lines = generateLines(cols, rows);
+  rows = lines.length;
+  cols = lines[0].length;
+  rectGrid = generateGrid(cols, rows);
+  lineGrid = generateLines(cols,rows);
 }
 
 function draw() {
@@ -43,28 +49,30 @@ function displayGrid(){
 function displayLines(){
   for (let y = 0; y < rows; y++){
     for (let x = 0; x < cols; x++){
-      if (lines[y][x] === 0){
-        stroke(200, 200, 200);
-        strokeWeight(lineWidth);
-        line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH);
-        line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
-      }
-      if (lines[y][x] === 1){
-        stroke(200, 0, 0);
-        strokeWeight(lineWidth);
-        line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH);
-      }
-      if (lines[y][x] === 2){
-        stroke(200, 0, 0);
-        strokeWeight(lineWidth);
-        line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH , y * LINE_LENGTH + LINE_LENGTH);
-      }
+      showLine(lines[y][x], x, y);
 
     }
   }
 }
 
-
+function showLine(location, x, y){
+  if (location === 0){
+    stroke(200, 200, 200);
+    strokeWeight(lineWidth);
+    line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH);
+    line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
+  }
+  if (location === 1){
+    stroke(200, 0, 0);
+    strokeWeight(lineWidth);
+    line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH);
+  }
+  if (location === 2){
+    stroke(200, 0, 0);
+    strokeWeight(lineWidth);
+    line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH , y * LINE_LENGTH + LINE_LENGTH);
+  }
+}
 
 function mousePressed(){
   let x = Math.floor((mouseX*LINE_LENGTH)/ cols);

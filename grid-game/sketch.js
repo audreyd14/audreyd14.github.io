@@ -13,8 +13,10 @@ let lines;
 let rows;
 let cols;
 let lineWidth = 10;
-let horizontal = true;
-let allLines = [];
+let north = 0;
+let east = 0;
+let south = 0;
+let west = 0;
 
 
 function setup() {
@@ -38,87 +40,77 @@ function displayGrid(){
         fill("white");
       }
       rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE);
-
     }
   }
 }
 
 function displayLines(){
-  for (let i of allLines){
   for (let y = 0; y < rows; y++){
     for (let x = 0; x < cols; x++){
-      showLineN(i.n, x, y);
-      showLineE(i.e, x, y);
-      showLineS(i.s, x, y);
-      showLineW(i.w, x, y);
+
+      let cell = lineGrid[y][x];
+
+      showLineN(x, y, cell);
+      showLineE(x, y, cell);
+      showLineS(x, y, cell);
+      showLineW(x, y, cell);
     }
   }
 }
-}
-
 
 //NORTH
-function showLineN(){
-  if (i.n === 0){
-    stroke(200, 200, 200);
-    strokeWeight(lineWidth);
-    line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH);
+function showLineN(x, y, cell){
+  if (cell.n === 0){
+    stroke(200);
   }
-  if (i.n === 1){
+  if (cell.n === 1){
     stroke(200, 0, 0);
-    strokeWeight(lineWidth);
-    line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH);
   }
+  strokeWeight(lineWidth);
+  line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH);
+
 }
 //EAST
-function showLineE(){
-  if (i.e === 0){
-    stroke(200, 200, 200);
-    strokeWeight(lineWidth);
-    line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
+function showLineE(x, y, cell){
+  if (cell.e === 0){
+    stroke(200);
   }
-  if (i.e === 1){
+  if (cell.e === 1){
     stroke(200, 0, 0);
-    strokeWeight(lineWidth);
-    line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
   }
+  strokeWeight(lineWidth);
+  line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
 }
 //SOUTH
-function showLineS(){
-  if (i.s === 0){
-    stroke(200, 200, 200);
-    strokeWeight(lineWidth);
-    line(x * LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
+function showLineS(x, y, cell){
+  if (cell.s === 0){
+    stroke(200);
   }
-  if (i.s === 1){
+  if (cell.s === 1){
     stroke(200, 0, 0);
-    strokeWeight(lineWidth);
-    line(x * LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
   }
+  strokeWeight(lineWidth);
+  line(x * LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
 }
 //WEST
-function showLineW(){
-  if (i.w === 0){
-    stroke(200, 200, 200);
-    strokeWeight(lineWidth);
-    line(x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
+function showLineW(x, y, cell){
+  if (cell.w === 0){
+    stroke(200);
   }
-  if (i.w === 1){
+  if (cell.w === 1){
     stroke(200, 0, 0);
-    strokeWeight(lineWidth);
-    line(x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
   }
-}
-
-function mousePressed(){////////////////
-  let x = Math.floor(mouseX/LINE_LENGTH);
-  let y = Math.floor(mouseY/LINE_LENGTH);
-
-  toggleLinesX(x,y);
+  strokeWeight(lineWidth);
+  line(x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
 }
 
 
+// function mousePressed(){////////////////
+//   let x = Math.floor(mouseX/LINE_LENGTH);
+//   let y = Math.floor(mouseY/LINE_LENGTH);
 
+//   toggleLines(x,y);
+// }
 
 
 
@@ -176,41 +168,48 @@ function generateGrid(cols, rows){
   return newGrid;
 }
 
+
+
 function generateLines(cols, rows){
-  let north;
-  let east;
-  let south;
-  let west;
-  //NORTH
-  if( mouseY <= rows*LINE_LENGTH + lineWidth && mouseY >= rows*LINE_LENGTH - lineWidth){
-    north = 1;
-  }
-  //EAST
-  if( mouseX <= cols*LINE_LENGTH + lineWidth && mouseX >= cols*LINE_LENGTH - lineWidth){
-    east = 1;
-  }
-  //SOUTH
-  if( mouseY <= rows*LINE_LENGTH + LINE_LENGTH + lineWidth && mouseY >= rows*LINE_LENGTH +LINE_LENGTH - lineWidth){
-    south = 1;
-  }
-  //WEST
-  if( mouseX <= cols*LINE_LENGTH + LINE_LENGTH + lineWidth && mouseX >= cols*LINE_LENGTH + LINE_LENGTH - lineWidth){
-    west = 1;
-  }
-
-  let lineCoords = [
-    n: north,
-    e: east,
-    w: west,
-    s: south,
-  ];
-  
-
+  // //NORTH
+  // if( mouseY <= rows*LINE_LENGTH + lineWidth && mouseY >= rows*LINE_LENGTH - lineWidth){
+  //   north = 1;
+  // }
+  // else {
+  //   north = north;
+  // }
+  // //EAST
+  // if( mouseX <= cols*LINE_LENGTH + lineWidth && mouseX >= cols*LINE_LENGTH - lineWidth){
+  //   east = 1;
+  // }
+  // else{
+  //   east = east;
+  // }
+  // //SOUTH
+  // if( mouseY <= rows*LINE_LENGTH + LINE_LENGTH + lineWidth && mouseY >= rows*LINE_LENGTH +LINE_LENGTH - lineWidth){
+  //   south = 1;
+  // }
+  // else{
+  //   south = south;
+  // }
+  // //WEST
+  // if( mouseX <= cols*LINE_LENGTH + LINE_LENGTH + lineWidth && mouseX >= cols*LINE_LENGTH + LINE_LENGTH - lineWidth){
+  //   west = 1;
+  // }
+  // else{
+  //   west = west;
+  // }
+  let allLines = []; 
   for(let y = 0; y < rows; y ++){
-    line.push([]);
+    allLines.push([]);
     for(let x = 0; x < cols; x++){
-      line[y].push(lineCoords);
+      allLines[y].push({
+        n: 0,
+        e: 0,
+        s: 0,
+        w: 0,
+      });
     }
   }
-  return line;
+  return allLines;
 }

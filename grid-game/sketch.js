@@ -194,16 +194,24 @@ function toggleEdge(x, y, edge){
 
   // check neighbor too
   if (edge === "n" && y > 0){
-    if (completeBox(x, y-1)) madeBox = true;
+    if (completeBox(x, y-1)) {
+      madeBox = true;
+    }
   }
   if (edge === "e" && x < cols - 1){
-    if (completeBox(x+1, y)) madeBox = true;
+    if (completeBox(x+1, y)) {
+      madeBox = true;
+    }
   }
   if (edge === "s" && y < rows - 1){
-    if (completeBox(x, y+1)) madeBox = true;
+    if (completeBox(x, y+1)) {
+      madeBox = true;
+    }
   }
   if (edge === "w" && x > 0){
-    if (completeBox(x-1, y)) madeBox = true;
+    if (completeBox(x-1, y)) {
+      madeBox = true;
+    }
   }
 
   //switch turn if no box made

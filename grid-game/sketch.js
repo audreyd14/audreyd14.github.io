@@ -17,6 +17,7 @@ let north = 0;
 let east = 0;
 let south = 0;
 let west = 0;
+let currentPlayer = 1; //1 = red, 2 = blue
 
 
 function setup() {
@@ -37,8 +38,15 @@ function displayGrid(){
   for (let y = 0; y < rows; y++){
     for (let x = 0; x < cols; x++){
       if (rectGrid[y][x] === 0){
-        fill("white");
+        fill(255);
       }
+      if (rectGrid[y][x] === 1){
+        fill(255, 150, 150);
+      }
+      if (rectGrid[y][x] === 2){
+        fill(150, 150, 255);
+      }
+
       rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE);
     }
   }
@@ -66,6 +74,9 @@ function showLineN(x, y, cell){
   if (cell.n === 1){
     stroke(200, 0, 0);
   }
+  if (cell.n === 2){
+    stroke(0,0, 200);
+  }
   strokeWeight(lineWidth);
   line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH);
 
@@ -78,8 +89,11 @@ function showLineE(x, y, cell){
   if (cell.e === 1){
     stroke(200, 0, 0);
   }
+    if (cell.e === 2){
+    stroke(0,0, 200);
+  }
   strokeWeight(lineWidth);
-  line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
+  line(x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
 }
 //SOUTH
 function showLineS(x, y, cell){
@@ -88,6 +102,9 @@ function showLineS(x, y, cell){
   }
   if (cell.s === 1){
     stroke(200, 0, 0);
+  }
+    if (cell.s === 2){
+    stroke(0,0, 200);
   }
   strokeWeight(lineWidth);
   line(x * LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
@@ -100,61 +117,124 @@ function showLineW(x, y, cell){
   if (cell.w === 1){
     stroke(200, 0, 0);
   }
+    if (cell.w === 2){
+    stroke(0,0, 200);
+  }
   strokeWeight(lineWidth);
-  line(x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
+  line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
 }
 
 
-// function mousePressed(){////////////////
-//   let x = Math.floor(mouseX/LINE_LENGTH);
-//   let y = Math.floor(mouseY/LINE_LENGTH);
+function mousePressed(){
+  let x = Math.floor(mouseX / LINE_LENGTH);
+  let y = Math.floor(mouseY / LINE_LENGTH);
 
-//   toggleLines(x,y);
-// }
+  if  (x < 0 || x >= cols || y < 0 || y >= rows) {
+    return;
+  }
+  let localX = mouseX % LINE_LENGTH;
+  let localY = mouseY % LINE_LENGTH;
+
+  let edge = getEdge(localX, localY);
+
+  toggleEdge(x, y, edge);
+}
+
+function getEdge(localX, localY){
+  let margin = lineWidth;
+
+  if(localY < margin){
+    return "n";
+  }
+  if (localX > LINE_LENGTH - margin){
+    return "e";
+  }
+  if (localY > LINE_LENGTH - margin){
+    return "s";
+  }
+  if (localX < margin){
+    return "w";
+  }
+
+  return null;
+}
+
+function toggleEdge(x, y, edge){
+  if (!edge){
+    return;
+  }
+  let cell = lineGrid[y][x];
+
+  if (cell[edge] === 1 || cell[edge] === 2){
+    return;
+  }
+
+  cell[edge] = currentPlayer;
+
+  //update neighbor
+  if(edge === "n" && y>0){
+    lineGrid[y-1][x].s = currentPlayer;
+  }
+  if(edge === "e" && x < cols - 1){
+    lineGrid[y][x+1].w = currentPlayer;
+  }
+  if(edge === "s" && y < rows - 1){
+    lineGrid[y+1][x].n = currentPlayer;
+  }
+  if(edge === "w" && x > 0){
+    lineGrid[y][x-1].e = currentPlayer;
+  }
+
+  // check for boxes
+  let madeBox = false;
+
+  if (completeBox(x, y)){
+    madeBox = true;
+  }
+
+  // check neighbor too
+  if (edge === "n" && y > 0){
+    if (completeBox(x, y-1)) madeBox = true;
+  }
+  if (edge === "e" && x < cols - 1){
+    if (completeBox(x+1, y)) madeBox = true;
+  }
+  if (edge === "s" && y < rows - 1){
+    if (completeBox(x, y+1)) madeBox = true;
+  }
+  if (edge === "w" && x > 0){
+    if (completeBox(x-1, y)) madeBox = true;
+  }
+
+  //switch turn if no box made
+  if (!madeBox){
+    if (currentPlayer === 1){
+      currentPlayer = 2;
+    }
+    else {
+      currentPlayer = 1;
+    }
+  }
+}
 
 
 
-// function lineCorrect(x,y){
+function completeBox(x, y){
+  let cell = lineGrid[y][x];
 
-//   if (x % cols >= 0 - lineWidth && x % cols <= 0 + lineWidth){
-//     return horizontal = true;
-//   }
-
-//   else if (y % rows >= 0 - lineWidth && y % rows <= 0 + lineWidth){
-//     return horizontal = false;
-//   }
-// }
-
-// function toggleGrid(x, y){
-//   if (x>=0 && x< cols && y >=0 && y< rows){
-//     if (grid[y][x] === 1){
-//       grid[y][x] = 0;
-//     }
-
-//     else if (grid[y][x] === 0){
-//       grid[y][x] = 1;
-//     }
-//   }
-// }
-
-// function generateRandomGrid(cols, rows){
-//   let newGrid = [];
-
-//   for(let y = 0; y < rows; y ++){
-//     newGrid.push([]);
-//     for(let x = 0; x < cols; x++){
-//       if(random(100) < 50){
-//         newGrid[y].push(1);
-//       }
-//       else {
-//         newGrid[y].push(0);
-//       }
-//     }
-//   }
-//   return newGrid;
-// }
-
-
+  if (
+    cell.n !== 0 &&
+    cell.e !== 0 &&
+    cell.s !== 0 &&
+    cell.w !== 0 &&
+    rectGrid[y][x] === 0 //not completed already
+  ){
+    rectGrid[y][x] = currentPlayer;
+    return true;
+  }
+  
+  return false;
+}
 
 function generateGrid(cols, rows){
   let newGrid = [];
@@ -169,36 +249,8 @@ function generateGrid(cols, rows){
 }
 
 
-
 function generateLines(cols, rows){
-  // //NORTH
-  // if( mouseY <= rows*LINE_LENGTH + lineWidth && mouseY >= rows*LINE_LENGTH - lineWidth){
-  //   north = 1;
-  // }
-  // else {
-  //   north = north;
-  // }
-  // //EAST
-  // if( mouseX <= cols*LINE_LENGTH + lineWidth && mouseX >= cols*LINE_LENGTH - lineWidth){
-  //   east = 1;
-  // }
-  // else{
-  //   east = east;
-  // }
-  // //SOUTH
-  // if( mouseY <= rows*LINE_LENGTH + LINE_LENGTH + lineWidth && mouseY >= rows*LINE_LENGTH +LINE_LENGTH - lineWidth){
-  //   south = 1;
-  // }
-  // else{
-  //   south = south;
-  // }
-  // //WEST
-  // if( mouseX <= cols*LINE_LENGTH + LINE_LENGTH + lineWidth && mouseX >= cols*LINE_LENGTH + LINE_LENGTH - lineWidth){
-  //   west = 1;
-  // }
-  // else{
-  //   west = west;
-  // }
+
   let allLines = []; 
   for(let y = 0; y < rows; y ++){
     allLines.push([]);

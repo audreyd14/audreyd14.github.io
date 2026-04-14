@@ -5,8 +5,8 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-const CELL_SIZE = 50;
-const LINE_LENGTH = 50;
+let cell_size;
+let line_length;
 let rectGrid;
 let lineGrid;
 let lines;
@@ -18,20 +18,28 @@ let east = 0;
 let south = 0;
 let west = 0;
 let currentPlayer = 1; //1 = red, 2 = blue
+let redTurn = true;
+let levelNumber = 5;
 
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  rows = 10;
-  cols = 10;
+  rows = levelNumber;
+  cols = levelNumber;
   rectGrid = generateGrid(cols, rows);
   lineGrid = generateLines(cols,rows);
 }
 
 function draw() {
   background(220);
+  resizeCanvas(windowWidth, windowHeight);
+  rows = levelNumber;
+  cols = levelNumber;
+  cell_size = min(windowHeight / levelNumber, windowWidth / levelNumber);
+  line_length = min(windowHeight / levelNumber, windowWidth / levelNumber);
   displayGrid();
   displayLines();
+  playerTurn();
 }
 
 function displayGrid(){
@@ -47,11 +55,24 @@ function displayGrid(){
         fill(150, 150, 255);
       }
 
-      rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE);
+      rect(x * cell_size, y * cell_size, cell_size);
     }
   }
 }
 
+function keyPressed(){
+  if (key === "1"){
+    levelNumber = 5;
+  }
+
+  if (key === "2"){
+    levelNumber = 10;
+  }
+
+  if (key === "3"){
+    levelNumber = 15;
+  }
+}
 function displayLines(){
   for (let y = 0; y < rows; y++){
     for (let x = 0; x < cols; x++){
@@ -66,6 +87,26 @@ function displayLines(){
   }
 }
 
+function playerTurn(){
+  if (redTurn){
+    redTurn = true;
+    fill("red");
+    noStroke();
+    textSize(windowHeight / 30);
+    textAlign(RIGHT, TOP);
+    text("Red Turn", windowWidth - line_length, windowHeight / 10);
+  }
+  if (!redTurn){
+    redTurn = false;
+    fill("blue");
+    noStroke();
+    textSize(windowHeight / 30);
+    textAlign(RIGHT, TOP);
+    text("Blue Turn", windowWidth - line_length, windowHeight / 10);
+  }
+
+}
+
 //NORTH
 function showLineN(x, y, cell){
   if (cell.n === 0){
@@ -78,7 +119,7 @@ function showLineN(x, y, cell){
     stroke(0,0, 200);
   }
   strokeWeight(lineWidth);
-  line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH);
+  line(x * line_length, y * line_length, x * line_length + line_length, y * line_length);
 
 }
 //EAST
@@ -89,11 +130,11 @@ function showLineE(x, y, cell){
   if (cell.e === 1){
     stroke(200, 0, 0);
   }
-    if (cell.e === 2){
+  if (cell.e === 2){
     stroke(0,0, 200);
   }
   strokeWeight(lineWidth);
-  line(x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
+  line(x * line_length + line_length, y * line_length, x * line_length + line_length, y * line_length + line_length);
 }
 //SOUTH
 function showLineS(x, y, cell){
@@ -103,11 +144,11 @@ function showLineS(x, y, cell){
   if (cell.s === 1){
     stroke(200, 0, 0);
   }
-    if (cell.s === 2){
+  if (cell.s === 2){
     stroke(0,0, 200);
   }
   strokeWeight(lineWidth);
-  line(x * LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH, x * LINE_LENGTH + LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
+  line(x * line_length, y * line_length + line_length, x * line_length + line_length, y * line_length + line_length);
 }
 //WEST
 function showLineW(x, y, cell){
@@ -117,23 +158,23 @@ function showLineW(x, y, cell){
   if (cell.w === 1){
     stroke(200, 0, 0);
   }
-    if (cell.w === 2){
+  if (cell.w === 2){
     stroke(0,0, 200);
   }
   strokeWeight(lineWidth);
-  line(x * LINE_LENGTH, y * LINE_LENGTH, x * LINE_LENGTH, y * LINE_LENGTH + LINE_LENGTH);
+  line(x * line_length, y * line_length, x * line_length, y * line_length + line_length);
 }
 
 
 function mousePressed(){
-  let x = Math.floor(mouseX / LINE_LENGTH);
-  let y = Math.floor(mouseY / LINE_LENGTH);
+  let x = Math.floor(mouseX / line_length);
+  let y = Math.floor(mouseY / line_length);
 
   if  (x < 0 || x >= cols || y < 0 || y >= rows) {
     return;
   }
-  let localX = mouseX % LINE_LENGTH;
-  let localY = mouseY % LINE_LENGTH;
+  let localX = mouseX % line_length;
+  let localY = mouseY % line_length;
 
   let edge = getEdge(localX, localY);
 
@@ -146,10 +187,10 @@ function getEdge(localX, localY){
   if(localY < margin){
     return "n";
   }
-  if (localX > LINE_LENGTH - margin){
+  if (localX > line_length - margin){
     return "e";
   }
-  if (localY > LINE_LENGTH - margin){
+  if (localY > line_length - margin){
     return "s";
   }
   if (localX < margin){
@@ -218,9 +259,12 @@ function toggleEdge(x, y, edge){
   if (!madeBox){
     if (currentPlayer === 1){
       currentPlayer = 2;
+      redTurn = !redTurn;
+      
     }
     else {
       currentPlayer = 1;
+      redTurn = true;
     }
   }
 }

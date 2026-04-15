@@ -20,6 +20,8 @@ let west = 0;
 let currentPlayer = 1; //1 = red, 2 = blue
 let redTurn = true;
 let levelNumber = 5;
+let redScore = 0;
+let blueScore = 0;
 
 
 function setup() {
@@ -31,16 +33,21 @@ function setup() {
 }
 
 function draw() {
-  background(220);
   resizeCanvas(windowWidth, windowHeight);
-  rows = levelNumber;
-  cols = levelNumber;
+  background("black");
   cell_size = min(windowHeight / levelNumber, windowWidth / levelNumber);
   line_length = min(windowHeight / levelNumber, windowWidth / levelNumber);
   displayGrid();
   displayLines();
+  scoreDisplay();
   playerTurn();
+  scores();
 }
+
+// function chooseLevel(){
+//   if 
+// }
+
 
 function displayGrid(){
   for (let y = 0; y < rows; y++){
@@ -87,6 +94,7 @@ function displayLines(){
   }
 }
 
+//display player's turn it is
 function playerTurn(){
   if (redTurn){
     redTurn = true;
@@ -105,6 +113,33 @@ function playerTurn(){
     text("Blue Turn", windowWidth - line_length, windowHeight / 10);
   }
 
+}
+
+//display scores
+function scoreDisplay(){
+  //red
+  fill("red");
+  noStroke();
+  textSize(windowHeight / 30);
+  textAlign(RIGHT, TOP);
+  text(`Red score: ${redScore}`, windowWidth - line_length, (windowHeight / 10)*2);
+
+  //blue
+  fill("blue");
+  noStroke();
+  textSize(windowHeight / 30);
+  textAlign(RIGHT, TOP);
+  text(`Red score: ${blueScore}`, windowWidth - line_length, (windowHeight / 10)*2);
+}
+
+//counting scores
+function scores(){
+  if (completeBox === true && currentPlayer === 1){
+    redScore++;
+  }
+  if (completeBox === true && currentPlayer === 2){
+    blueScore++;
+  }
 }
 
 //NORTH
@@ -287,6 +322,7 @@ function completeBox(x, y){
   
   return false;
 }
+
 
 function generateGrid(cols, rows){
   let newGrid = [];

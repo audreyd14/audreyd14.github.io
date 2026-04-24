@@ -16,6 +16,7 @@
 - [Fireworks OOP](13-fireworks)
 - [Ball Collision OOP](14-ball-oop)\
 - [Connected Nodes](15-nodes)
+- [Inheritance OOP](16-inherit)
 
 ## assignments
 - [Interactive Scene](interactive-scene)

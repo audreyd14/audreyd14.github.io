@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../../../Downloads/PathFinding.js-master/PathFinding.js-master"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "PathFinding.js-master"
+	}
+}
